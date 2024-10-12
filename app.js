@@ -28,7 +28,9 @@ try {
   process.exit(1);
 }
 
-const filteredData = data.filter(item => item.ku === 13 && item.value > 5);
+const filteredData = data
+  .filter(item => item.ku === "13" && item.value > 5)
+  .map(item => item.value);
 
 if (options.display) {
   console.log(filteredData);
