@@ -20,3 +20,24 @@ if (!fs.existsSync(options.input)) {
   process.exit(1);
 }
 
+let data;
+try {
+  data = JSON.parse(fs.readFileSync(options.input, 'utf8'));
+} catch (err) {
+  console.error("Error reading input file:", err);
+  process.exit(1);
+}
+
+const filteredData = data.filter(item => item.ku === 13 && item.value > 5);
+
+if (options.display) {
+  console.log(filteredData);
+}
+
+if (options.output) {
+  try {
+    fs.writeFileSync(options.output, JSON.stringify(filteredData, null, 2));
+  } catch (err) {
+    console.error("Error writing output file:", err);
+  }
+}
