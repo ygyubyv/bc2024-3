@@ -6,17 +6,20 @@ program
   .requiredOption('-i, --input <path>', 'path to input JSON file')
   .option('-o, --output <path>', 'path to output JSON file')
   .option('-d, --display', 'display the result on the console')
-  .parse(process.argv);
+  .exitOverride((err) => {
+    if (err.code === 'commander.missingMandatoryOptionValue') {
+      console.error("Please, specify the path to the input file.");
+      process.exit(1);
+    }
+    throw err;
+  });
+
+program.parse(process.argv);
 
 const options = program.opts();
 
-if (!options.input) {
-  console.error("Please, specify input file.");
-  process.exit(1);
-}
-
 if (!fs.existsSync(options.input)) {
-  console.error("Cannot find input file.");
+  console.error("Cannot find the input file.");
   process.exit(1);
 }
 
