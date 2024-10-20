@@ -2,6 +2,11 @@ const fs = require('fs');
 const { Command } = require('commander');
 const program = new Command();
 
+// Налаштування виводу, щоб ігнорувати базові повідомлення
+program.configureOutput({
+  writeErr: (str) => {} // ігнорує всі помилки командера
+});
+
 program
   .requiredOption('-i, --input <path>', 'path to input JSON file')
   .option('-o, --output <path>', 'path to output JSON file')
@@ -18,6 +23,7 @@ program.parse(process.argv);
 
 const options = program.opts();
 
+// Перевірка чи існує вказаний файл
 if (!fs.existsSync(options.input)) {
   console.error("Cannot find the input file.");
   process.exit(1);
