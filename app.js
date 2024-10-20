@@ -2,9 +2,8 @@ const fs = require('fs');
 const { Command } = require('commander');
 const program = new Command();
 
-// Налаштування виводу, щоб ігнорувати базові повідомлення
 program.configureOutput({
-  writeErr: (str) => {} // ігнорує всі помилки командера
+  writeErr: (str) => {}
 });
 
 program
@@ -23,7 +22,7 @@ program.parse(process.argv);
 
 const options = program.opts();
 
-// Перевірка чи існує вказаний файл
+
 if (!fs.existsSync(options.input)) {
   console.error("Cannot find the input file.");
   process.exit(1);
